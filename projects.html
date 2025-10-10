@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects and Map</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.3.0/ol.css">
+    <script src="https://cdn.jsdelivr.net/npm/ol@v7.3.0/dist/ol.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Positional Information & Web GIS</h1>
+        <nav>
+            <a href="index.html">Home Page</a>
+            <a href="background.html">Core Concepts</a>
+            <a href="projects.html">Projects & Map</a>
+        </nav>
+    </header>
+    
+    <main>
+        <h2>OpenLayers World Map Demo</h2>
+        <p>This page uses OpenLayers to display a world map, demonstrating the simplest form of Web GIS integration.</p>
+        
+        <div id="map"></div>
+        
+        <script>
+            const zoomLevel = 1; 
+
+            const map = new ol.Map({
+                target: 'map', 
+                layers: [
+                    new ol.layer.Tile({
+                        source: new ol.source.OSM() 
+                    })
+                ],
+                view: new ol.View({
+                    center: ol.proj.fromLonLat([0, 0]), 
+                    zoom: zoomLevel 
+                })
+            });
+        </script>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 | Geomatics Engineering Portfolio | All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

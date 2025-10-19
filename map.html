@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zelal Sönmez - Map</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.3.0/ol.css">
+    <script src="https://cdn.jsdelivr.net/npm/ol@v7.3.0/dist/ol.js"></script>
+
+    <style>
+        body {
+            min-height: 100vh; 
+            display: flex;
+            flex-direction: column;
+        }
+        .header-bar {
+            z-index: 10; 
+        }
+        #map-container {
+            flex-grow: 1; 
+        }
+    </style>
+</head>
+<body>
+    <div class="header-bar">
+        <h1 class="main-heading">Location of my Department</h1>
+        <div class="nav-menu">
+            <a href="index.html">Home</a> I 
+            <a href="about.html">About</a> I 
+            <a href="map.html">Map</a>
+        </div>
+    </div>
+
+    <div id="map-container">
+        <div id="map"></div>
+    </div>
+
+    <script>
+        const hacettepe_coord_4326 = [32.7485, 39.8665];
+        
+        const hacettepe_coord_3857 = ol.proj.fromLonLat(hacettepe_coord_4326);
+
+        const turkey_center_3857 = ol.proj.fromLonLat([35.0, 39.0]);
+
+        const marker = new ol.Feature({
+            geometry: new ol.geom.Point(hacettepe_coord_3857)
+        });
+
+        const markerStyle = new ol.style.Style({
+            image: new ol.style.Icon({
+                anchor: [0.5, 1], 
+                src: 'https://cdn.jsdelivr.net/npm/ol-mapbox-style@11.0.0/dist/sprite/location-marker-blue.png', // Mavi işaretleme oku
+                scale: 0.6
+            }),
+        });
+
+        marker.setStyle(markerStyle);
+
+        const vectorLayer = new ol.layer.Vector({
+            source: new ol.source.Vector({
+                features: [marker]
+            })
+        });
+
+        const map = new ol.Map({
+            target: 'map',
+            layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.OSM() 
+                }),
+                vectorLayer 
+            ],
+            view: new ol.View({
+                center: turkey_center_3857, 
+                zoom: 6, 
+                minZoom: 2,
+                maxZoom: 18
+            })
+        });
+
+        setTimeout(() => {
+            map.getView().animate({
+                center: hacettepe_coord_3857,
+                zoom: 15, 
+                duration: 2000 
+            });
+        }, 1000); 
+    </script>
+</body>
+</html>
+
+</html>
